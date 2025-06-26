@@ -5,10 +5,8 @@ target_sources(mpu6050 PRIVATE
     #"mpu6050_dmp.c"
 )
 
-target_include_directories(mpu6050 PUBLIC 
-)
-
-target_link_libraries(mpu6050 PRIVATE
+target_include_directories(mpu6050 PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 target_compile_options(mpu6050 PUBLIC
