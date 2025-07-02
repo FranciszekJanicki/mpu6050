@@ -850,7 +850,7 @@ mpu6050_err_t mpu6050_set_smplrt_div_reg(mpu6050_t const* mpu6050,
     mpu6050_err_t err =
         mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_SMPLRT_DIV, &data, sizeof(data));
 
-    reg->smplrt_div = data & 0xFFU;
+    data = reg->smplrt_div & 0xFFU;
 
     return err;
 }
@@ -1267,7 +1267,7 @@ mpu6050_err_t mpu6050_set_i2c_slv4_reg(mpu6050_t const* mpu6050, mpu6050_i2c_slv
 
     uint8_t data = {};
 
-    data = reg->i2c_slv_reg & 0xFFU;
+    data = reg->i2c_slv4_reg & 0xFFU;
 
     return mpu6050_bus_write_data(mpu6050, MPU6050_REG_ADDRESS_I2C_SLV4_REG, &data, sizeof(data));
 }
@@ -1828,7 +1828,8 @@ mpu6050_err_t mpu6050_set_mot_detect_ctrl_reg(mpu6050_t const* mpu6050,
 
     uint8_t data = {};
 
-    mpu6050_bus_write_data(mpu6050, MPU6050_REG_ADDRESS_MOT_DETECT_CTRL, &data, sizeof(data));
+    mpu6050_err_t err =
+        mpu6050_bus_write_data(mpu6050, MPU6050_REG_ADDRESS_MOT_DETECT_CTRL, &data, sizeof(data));
 
     data &= ~((0x03U << 4U) | (0x03U << 2U) | 0x03U);
 
