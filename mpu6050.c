@@ -748,50 +748,126 @@ mpu6050_err_t mpu6050_set_self_test_a_reg(mpu6050_t const* mpu6050,
 mpu6050_err_t mpu6050_get_xg_offs_usr_reg(mpu6050_t const* mpu6050, mpu6050_xg_offs_usr_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data[2] = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_XG_OFFS_USR_H, data, sizeof(data));
+
+    reg->xg_offs_usr = (int16_t)(((data[0] & 0xFF) << 8) | (data[1] & 0xFF));
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_xg_offs_usr_reg(mpu6050_t const* mpu6050,
                                           mpu6050_xg_offs_usr_reg_t const* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data[2] = {};
+
+    data[0] = (uint8_t)((reg->xg_offs_usr >> 8) & 0xFF);
+    data[1] = (uint8_t)(reg->xg_offs_usr & 0xFF);
+
+    return mpu6050_bus_write_data(mpu6050, MPU6050_REG_ADDRESS_XG_OFFS_USR_H, data, sizeof(data));
 }
 
 mpu6050_err_t mpu6050_get_yg_offs_usr_reg(mpu6050_t const* mpu6050, mpu6050_yg_offs_usr_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data[2] = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_YG_OFFS_USR_H, data, sizeof(data));
+
+    reg->yg_offs_usr = (int16_t)(((data[0] & 0xFF) << 8) | (data[1] & 0xFF));
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_yg_offs_usr_reg(mpu6050_t const* mpu6050,
                                           mpu6050_yg_offs_usr_reg_t const* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data[2] = {};
+
+    data[0] = (uint8_t)((reg->yg_offs_usr >> 8) & 0xFF);
+    data[1] = (uint8_t)(reg->yg_offs_usr & 0xFF);
+
+    return mpu6050_bus_write_data(mpu6050, MPU6050_REG_ADDRESS_YG_OFFS_USR_H, data, sizeof(data));
 }
 
 mpu6050_err_t mpu6050_get_zg_offs_usr_reg(mpu6050_t const* mpu6050, mpu6050_zg_offs_usr_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data[2] = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_ZG_OFFS_USR_H, data, sizeof(data));
+
+    reg->zg_offs_usr = (int16_t)(((data[0] & 0xFF) << 8) | (data[1] & 0xFF));
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_zg_offs_usr_reg(mpu6050_t const* mpu6050,
                                           mpu6050_zg_offs_usr_reg_t const* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data[2] = {};
+
+    data[0] = (uint8_t)((reg->zg_offs_usr >> 8) & 0xFF);
+    data[1] = (uint8_t)(reg->zg_offs_usr & 0xFF);
+
+    return mpu6050_bus_write_data(mpu6050, MPU6050_REG_ADDRESS_ZG_OFFS_USR_H, data, sizeof(data));
 }
 
 mpu6050_err_t mpu6050_get_smplrt_div_reg(mpu6050_t const* mpu6050, mpu6050_smplrt_div_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_SMPLRT_DIV, &data, sizeof(data));
+
+    reg->smplrt_div = data & 0xFFU;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_smplrt_div_reg(mpu6050_t const* mpu6050,
                                          mpu6050_smplrt_div_reg_t const* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_SMPLRT_DIV, &data, sizeof(data));
+
+    reg->smplrt_div = data & 0xFFU;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_get_config_reg(mpu6050_t const* mpu6050, mpu6050_config_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_CONFIG, &data, sizeof(data));
+
+    reg->ext_sync_set = (data >> 3U) & 0x07U;
+    reg->dlpf_cfg = data & 0x07U;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_config_reg(mpu6050_t const* mpu6050, mpu6050_config_reg_t const* reg)
@@ -802,6 +878,18 @@ mpu6050_err_t mpu6050_set_config_reg(mpu6050_t const* mpu6050, mpu6050_config_re
 mpu6050_err_t mpu6050_get_gyro_config_reg(mpu6050_t const* mpu6050, mpu6050_gyro_config_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_GYRO_CONFIG, &data, sizeof(data));
+
+    reg->xg_st = (data >> 7U) & 0x01U;
+    reg->yg_st = (data >> 6U) & 0x01U;
+    reg->zg_st = (data >> 5U) & 0x01U;
+    reg->fs_sel = (data >> 3U) & 0x03U;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_gyro_config_reg(mpu6050_t const* mpu6050,
@@ -814,6 +902,19 @@ mpu6050_err_t mpu6050_get_accel_config_reg(mpu6050_t const* mpu6050,
                                            mpu6050_accel_config_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_ACCEL_CONFIG, &data, sizeof(data));
+
+    reg->xa_st = (data >> 7U) & 0x01U;
+    reg->ya_st = (data >> 6U) & 0x01U;
+    reg->za_st = (data >> 5U) & 0x01U;
+    reg->afs_sel = (data >> 3U) & 0x03U;
+    reg->accel_hpf = data & 0x07U;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_accel_config_reg(mpu6050_t const* mpu6050,
@@ -825,6 +926,15 @@ mpu6050_err_t mpu6050_set_accel_config_reg(mpu6050_t const* mpu6050,
 mpu6050_err_t mpu6050_get_ff_thr_reg(mpu6050_t const* mpu6050, mpu6050_ff_thr_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_FF_THR, &data, sizeof(data));
+
+    reg->ff_thr = data & 0xFFU;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_ff_dur_reg(mpu6050_t const* mpu6050, mpu6050_ff_dur_reg_t const* reg)
@@ -835,6 +945,15 @@ mpu6050_err_t mpu6050_set_ff_dur_reg(mpu6050_t const* mpu6050, mpu6050_ff_dur_re
 mpu6050_err_t mpu6050_get_mot_thr_reg(mpu6050_t const* mpu6050, mpu6050_mot_thr_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_MOT_THR, &data, sizeof(data));
+
+    reg->mot_thr = data & 0xFFU;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_mot_dur_reg(mpu6050_t const* mpu6050, mpu6050_mot_dur_reg_t const* reg)
@@ -845,6 +964,15 @@ mpu6050_err_t mpu6050_set_mot_dur_reg(mpu6050_t const* mpu6050, mpu6050_mot_dur_
 mpu6050_err_t mpu6050_get_zrmot_thr_reg(mpu6050_t const* mpu6050, mpu6050_zrmot_thr_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_ZRMOT_THR, &data, sizeof(data));
+
+    reg->zrmot_thr = data & 0xFFU;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_zrmot_dur_reg(mpu6050_t const* mpu6050,
@@ -856,6 +984,22 @@ mpu6050_err_t mpu6050_set_zrmot_dur_reg(mpu6050_t const* mpu6050,
 mpu6050_err_t mpu6050_get_fifo_en_reg(mpu6050_t const* mpu6050, mpu6050_fifo_en_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_FIFO_EN, &data, sizeof(data));
+
+    reg->temp_fifo_en = (data >> 7U) & 0x01U;
+    reg->xg_fifo_en = (data >> 6U) & 0x01U;
+    reg->yg_fifo_en = (data >> 5U) & 0x01U;
+    reg->zg_fifo_en = (data >> 4U) & 0x01U;
+    reg->accel_fifo_en = (data >> 3U) & 0x01U;
+    reg->slv2_fifo_en = (data >> 2U) & 0x01U;
+    reg->slv1_fifo_en = (data >> 1U) & 0x01U;
+    reg->slv0_fifo_en = data & 0x01U;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_fifo_en_reg(mpu6050_t const* mpu6050, mpu6050_fifo_en_reg_t const* reg)
@@ -867,6 +1011,19 @@ mpu6050_err_t mpu6050_get_i2c_mst_ctrl_reg(mpu6050_t const* mpu6050,
                                            mpu6050_i2c_mst_ctrl_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_I2C_MST_CTRL, &data, sizeof(data));
+
+    reg->mult_mst_en = (data >> 7U) & 0x01U;
+    reg->wait_for_es = (data >> 6U) & 0x01U;
+    reg->slv3_fifo_en = (data >> 5U) & 0x01U;
+    reg->i2c_mst_p_nsr = (data >> 4U) & 0x01U;
+    reg->i2c_mst_clk = data & 0xFFU;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_i2c_mst_ctrl_reg(mpu6050_t const* mpu6050,
@@ -880,6 +1037,16 @@ mpu6050_err_t mpu6050_get_i2c_slv_addr_reg(mpu6050_t const* mpu6050,
                                            mpu6050_i2c_slv_addr_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_I2C_SLV0_ADDR, &data, sizeof(data));
+
+    reg->i2c_slv_rw = (data >> 7U) & 0x01U;
+    reg->i2c_slv_addr = data & 0x7FU;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_i2c_slv_addr_reg(mpu6050_t const* mpu6050,
@@ -894,6 +1061,17 @@ mpu6050_err_t mpu6050_get_i2c_slv_reg(mpu6050_t const* mpu6050,
                                       mpu6050_i2c_slv_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err = mpu6050_bus_read_data(mpu6050,
+                                              MPU6050_REG_ADDRESS_I2C_SLV0_REG + slave_num,
+                                              &data,
+                                              sizeof(data));
+
+    reg->i2c_slv_reg = data & 0xFFU;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_i2c_slv_reg(mpu6050_t const* mpu6050,
@@ -908,6 +1086,21 @@ mpu6050_err_t mpu6050_get_i2c_slv_ctrl_reg(mpu6050_t const* mpu6050,
                                            mpu6050_i2c_slv_ctrl_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err = mpu6050_bus_read_data(mpu6050,
+                                              MPU6050_REG_ADDRESS_I2C_SLV0_CTRL + slave_num,
+                                              &data,
+                                              sizeof(data));
+
+    reg->i2c_slv_en = (data >> 7U) & 0x01U;
+    reg->i2c_slv_byte_sw = (data >> 6U) & 0x01U;
+    reg->i2c_slv_reg_dis = (data >> 5U) & 0x01U;
+    reg->i2c_slv_grp = (data >> 4U) & 0x01U;
+    reg->i2c_slv_len = data & 0x0FU;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_i2c_slv_ctrl_reg(mpu6050_t const* mpu6050,
@@ -921,6 +1114,16 @@ mpu6050_err_t mpu6050_get_i2c_slv4_addr_reg(mpu6050_t const* mpu6050,
                                             mpu6050_i2c_slv4_addr_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_I2C_SLV4_ADDR, &data, sizeof(data));
+
+    reg->i2c_slv4_rw = (data >> 7U) & 0x01U;
+    reg->i2c_slv4_addr = data & 0x7FU;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_i2c_slv4_addr_reg(mpu6050_t const* mpu6050,
@@ -932,6 +1135,15 @@ mpu6050_err_t mpu6050_set_i2c_slv4_addr_reg(mpu6050_t const* mpu6050,
 mpu6050_err_t mpu6050_get_i2c_slv4_reg(mpu6050_t const* mpu6050, mpu6050_i2c_slv_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_I2C_SLV4_REG, &data, sizeof(data));
+
+    reg->i2c_slv_reg = data & 0xFFU;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_i2c_slv4_reg(mpu6050_t const* mpu6050, mpu6050_i2c_slv_reg_t const* reg)
@@ -942,6 +1154,15 @@ mpu6050_err_t mpu6050_set_i2c_slv4_reg(mpu6050_t const* mpu6050, mpu6050_i2c_slv
 mpu6050_err_t mpu6050_get_i2c_slv4_do_reg(mpu6050_t const* mpu6050, mpu6050_i2c_slv4_do_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_I2C_SLV4_DO, &data, sizeof(data));
+
+    reg->i2c_slv4_do = data & 0xFFU;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_i2c_slv4_do_reg(mpu6050_t const* mpu6050,
@@ -954,6 +1175,13 @@ mpu6050_err_t mpu6050_get_i2c_slv4_ctrl_reg(mpu6050_t const* mpu6050,
                                             mpu6050_i2c_slv4_ctrl_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_SMPLRT_DIV, &data, sizeof(data));
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_i2c_slv4_ctrl_reg(mpu6050_t const* mpu6050,
@@ -965,6 +1193,13 @@ mpu6050_err_t mpu6050_set_i2c_slv4_ctrl_reg(mpu6050_t const* mpu6050,
 mpu6050_err_t mpu6050_get_i2c_slv4_di_reg(mpu6050_t const* mpu6050, mpu6050_i2c_slv4_di_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_SMPLRT_DIV, &data, sizeof(data));
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_i2c_slv4_di_reg(mpu6050_t const* mpu6050,
@@ -977,6 +1212,13 @@ mpu6050_err_t mpu6050_get_i2c_mst_status_reg(mpu6050_t const* mpu6050,
                                              mpu6050_i2c_mst_status_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_SMPLRT_DIV, &data, sizeof(data));
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_i2c_mst_status_reg(mpu6050_t const* mpu6050,
@@ -988,6 +1230,13 @@ mpu6050_err_t mpu6050_set_i2c_mst_status_reg(mpu6050_t const* mpu6050,
 mpu6050_err_t mpu6050_get_int_pin_cfg_reg(mpu6050_t const* mpu6050, mpu6050_int_pin_cfg_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_SMPLRT_DIV, &data, sizeof(data));
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_int_pin_cfg_reg(mpu6050_t const* mpu6050,
@@ -999,6 +1248,13 @@ mpu6050_err_t mpu6050_set_int_pin_cfg_reg(mpu6050_t const* mpu6050,
 mpu6050_err_t mpu6050_get_int_enable_reg(mpu6050_t const* mpu6050, mpu6050_int_enable_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_SMPLRT_DIV, &data, sizeof(data));
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_int_enable_reg(mpu6050_t const* mpu6050,
@@ -1011,56 +1267,155 @@ mpu6050_err_t mpu6050_get_dmp_int_status_reg(mpu6050_t const* mpu6050,
                                              mpu6050_dmp_int_status_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_SMPLRT_DIV, &data, sizeof(data));
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_get_int_status_reg(mpu6050_t const* mpu6050, mpu6050_int_status_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_INT_STATUS, &data, sizeof(data));
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_get_accel_xout_reg(mpu6050_t const* mpu6050, mpu6050_accel_xout_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data[2] = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_ACCEL_XOUT_H, data, sizeof(data));
+
+    reg->accel_xout = (int16_t)(((data[0] & 0xFF) << 8) | (data[1] & 0xFF));
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_get_accel_yout_reg(mpu6050_t const* mpu6050, mpu6050_accel_yout_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data[2] = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_ACCEL_YOUT_H, data, sizeof(data));
+
+    reg->accel_yout = (int16_t)(((data[0] & 0xFF) << 8) | (data[1] & 0xFF));
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_get_accel_zout_reg(mpu6050_t const* mpu6050, mpu6050_accel_zout_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data[2] = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_ACCEL_ZOUT_H, data, sizeof(data));
+
+    reg->accel_zout = (int16_t)(((data[0] & 0xFF) << 8) | (data[1] & 0xFF));
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_get_accel_out_reg(mpu6050_t const* mpu6050, mpu6050_accel_out_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data[6] = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_ACCEL_XOUT_H, data, sizeof(data));
+
+    reg->accel_xout = (int16_t)(((data[0] & 0xFF) << 8) | (data[1] & 0xFF));
+    reg->accel_yout = (int16_t)(((data[2] & 0xFF) << 8) | (data[3] & 0xFF));
+    reg->accel_zout = (int16_t)(((data[4] & 0xFF) << 8) | (data[5] & 0xFF));
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_get_temp_out_reg(mpu6050_t const* mpu6050, mpu6050_temp_out_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data[2] = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_TEMP_OUT_H, data, sizeof(data));
+
+    reg->temp_out = (int16_t)(((data[0] & 0xFF) << 8) | (data[1] & 0xFF));
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_get_gyro_xout_reg(mpu6050_t const* mpu6050, mpu6050_gyro_xout_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data[2] = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_GYRO_XOUT_H, data, sizeof(data));
+
+    reg->gyro_xout = (int16_t)(((data[0] & 0xFF) << 8) | (data[1] & 0xFF));
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_get_gyro_yout_reg(mpu6050_t const* mpu6050, mpu6050_gyro_yout_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data[2] = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_GYRO_YOUT_H, data, sizeof(data));
+
+    reg->gyro_yout = (int16_t)(((data[0] & 0xFF) << 8) | (data[1] & 0xFF));
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_get_gyro_zout_reg(mpu6050_t const* mpu6050, mpu6050_gyro_zout_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data[2] = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_GYRO_ZOUT_H, data, sizeof(data));
+
+    reg->gyro_zout = (int16_t)(((data[0] & 0xFF) << 8) | (data[1] & 0xFF));
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_get_gyro_out_reg(mpu6050_t const* mpu6050, mpu6050_gyro_out_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data[6] = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_GYRO_XOUT_H, data, sizeof(data));
+
+    reg->gyro_xout = (int16_t)(((data[0] & 0xFF) << 8) | (data[1] & 0xFF));
+    reg->gyro_yout = (int16_t)(((data[2] & 0xFF) << 8) | (data[3] & 0xFF));
+    reg->gyro_zout = (int16_t)(((data[4] & 0xFF) << 8) | (data[5] & 0xFF));
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_get_ext_sens_data_reg(mpu6050_t const* mpu6050,
@@ -1068,12 +1423,38 @@ mpu6050_err_t mpu6050_get_ext_sens_data_reg(mpu6050_t const* mpu6050,
                                             mpu6050_ext_sens_data_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err = mpu6050_bus_read_data(mpu6050,
+                                              MPU6050_REG_ADDRESS_EXT_SENS_DATA_00 + reg_num,
+                                              &data,
+                                              sizeof(data));
+
+    reg->ext_sens_data = data & 0xFFU;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_get_mot_detect_status_reg(mpu6050_t const* mpu6050,
                                                 mpu6050_mot_detect_status_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_MOT_DETECT_STATUS, &data, sizeof(data));
+
+    reg->mot_xneg = (data >> 7U) & 0x01U;
+    reg->mot_xpos = (data >> 6U) & 0x01U;
+    reg->mot_yneg = (data >> 5U) & 0x01U;
+    reg->mot_ypos = (data >> 4U) & 0x01U;
+    reg->mot_zneg = (data >> 3U) & 0x01U;
+    reg->mot_zpos = (data >> 2U) & 0x01U;
+    reg->mot_zrmot = data & 0x01U;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_get_i2c_slv_do_reg(mpu6050_t const* mpu6050,
@@ -1081,6 +1462,17 @@ mpu6050_err_t mpu6050_get_i2c_slv_do_reg(mpu6050_t const* mpu6050,
                                          mpu6050_i2c_slv_do_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err = mpu6050_bus_read_data(mpu6050,
+                                              MPU6050_REG_ADDRESS_I2C_SLV0_DO + slave_num,
+                                              &data,
+                                              sizeof(data));
+
+    reg->i2c_slv_do = data & 0xFFU;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_i2c_slv_do_reg(mpu6050_t const* mpu6050,
@@ -1094,6 +1486,20 @@ mpu6050_err_t mpu6050_get_i2c_mst_delay_ctrl_reg(mpu6050_t const* mpu6050,
                                                  mpu6050_i2c_mst_delay_ctrl_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_I2C_MST_DELAY_CTRL, &data, sizeof(data));
+
+    reg->delay_es_shadow = (data >> 7U) & 0x01U;
+    reg->i2c_slv4_dly_en = (data >> 4U) & 0x01U;
+    reg->i2c_slv3_dly_en = (data >> 3U) & 0x01U;
+    reg->i2c_slv2_dly_en = (data >> 2U) & 0x01U;
+    reg->i2c_slv1_dly_en = (data >> 1U) & 0x01U;
+    reg->i2c_slv0_dly_en = data & 0x01U;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_i2c_mst_delay_ctrl_reg(mpu6050_t const* mpu6050,
@@ -1106,6 +1512,17 @@ mpu6050_err_t mpu6050_get_signal_path_reset_reg(mpu6050_t const* mpu6050,
                                                 mpu6050_signal_path_reset_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_SIGNAL_PATH_RESET, &data, sizeof(data));
+
+    reg->gyro_reset = (data >> 2U) & 0x01U;
+    reg->accel_reset = (data >> 1U) & 0x01U;
+    reg->temp_reset = data & 0x01U;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_signal_path_reset_reg(mpu6050_t const* mpu6050,
@@ -1118,6 +1535,17 @@ mpu6050_err_t mpu6050_get_mot_detect_ctrl_reg(mpu6050_t const* mpu6050,
                                               mpu6050_mot_detect_ctrl_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_MOT_DETECT_CTRL, &data, sizeof(data));
+
+    reg->accel_on_delay = (data >> 4U) & 0x03U;
+    reg->ff_count = (data >> 2U) & 0x03U;
+    reg->ff_count = data & 0x03U;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_mot_detect_ctrl_reg(mpu6050_t const* mpu6050,
@@ -1129,6 +1557,22 @@ mpu6050_err_t mpu6050_set_mot_detect_ctrl_reg(mpu6050_t const* mpu6050,
 mpu6050_err_t mpu6050_get_user_ctrl_reg(mpu6050_t const* mpu6050, mpu6050_user_ctrl_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_USER_CTRL, &data, sizeof(data));
+
+    reg->dmp_en = (data >> 7U) & 0x01U;
+    reg->fifo_en = (data >> 6U) & 0x01U;
+    reg->i2c_mst_en = (data >> 5U) & 0x01U;
+    reg->i2c_if_dis = (data >> 4U) & 0x01U;
+    reg->dmp_reset = (data >> 3U) & 0x01U;
+    reg->fifo_reset = (data >> 2U) & 0x01U;
+    reg->i2c_mst_reset = (data >> 1U) & 0x01U;
+    reg->sig_cond_reset = data & 0x01U;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_user_ctrl_reg(mpu6050_t const* mpu6050,
@@ -1140,6 +1584,19 @@ mpu6050_err_t mpu6050_set_user_ctrl_reg(mpu6050_t const* mpu6050,
 mpu6050_err_t mpu6050_get_pwr_mgmt_1_reg(mpu6050_t const* mpu6050, mpu6050_pwr_mgmt_1_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_PWR_MGMT_1, &data, sizeof(data));
+
+    reg->device_reset = (data >> 7U) & 0x01U;
+    reg->sleep = (data >> 6U) & 0x01U;
+    reg->cycle = (data >> 5U) & 0x01U;
+    reg->temp_dis = (data >> 3U) & 0x01U;
+    reg->clk_sel = data & 0x07U;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_pwr_mgmt_1_reg(mpu6050_t const* mpu6050,
@@ -1151,6 +1608,21 @@ mpu6050_err_t mpu6050_set_pwr_mgmt_1_reg(mpu6050_t const* mpu6050,
 mpu6050_err_t mpu6050_get_pwr_mgmt_2_reg(mpu6050_t const* mpu6050, mpu6050_pwr_mgmt_2_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_PWR_MGMT_2, &data, sizeof(data));
+
+    reg->lp_wake_ctrl = (data >> 7U) & 0x01U;
+    reg->stby_xa = (data >> 5U) & 0x01U;
+    reg->stby_ya = (data >> 4U) & 0x01U;
+    reg->stby_za = (data >> 3U) & 0x01U;
+    reg->stby_xg = (data >> 2U) & 0x01U;
+    reg->stby_yg = (data >> 1U) & 0x01U;
+    reg->stby_zg = data & 0x01U;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_pwr_mgmt_2_reg(mpu6050_t const* mpu6050,
@@ -1162,6 +1634,17 @@ mpu6050_err_t mpu6050_set_pwr_mgmt_2_reg(mpu6050_t const* mpu6050,
 mpu6050_err_t mpu6050_get_bank_sel_reg(mpu6050_t const* mpu6050, mpu6050_bank_sel_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_BANK_SEL, &data, sizeof(data));
+
+    reg->prftch_en = (data >> 6U) & 0x01U;
+    reg->cfg_user_bank = (data >> 5U) & 0x01U;
+    reg->mem_sel = data & 0x1FU;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_bank_sel_reg(mpu6050_t const* mpu6050, mpu6050_bank_sel_reg_t const* reg)
@@ -1173,6 +1656,15 @@ mpu6050_err_t mpu6050_get_mem_start_addr_reg(mpu6050_t const* mpu6050,
                                              mpu6050_mem_start_addr_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_MEM_START_ADDR, &data, sizeof(data));
+
+    reg->start_addr = data & 0xFFU;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_mem_start_addr_reg(mpu6050_t const* mpu6050,
@@ -1184,6 +1676,15 @@ mpu6050_err_t mpu6050_set_mem_start_addr_reg(mpu6050_t const* mpu6050,
 mpu6050_err_t mpu6050_get_mem_r_w_reg(mpu6050_t const* mpu6050, mpu6050_mem_r_w_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_MEM_R_W, &data, sizeof(data));
+
+    reg->mem_r_w = data & 0xFFU;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_mem_r_w_reg(mpu6050_t const* mpu6050, mpu6050_mem_r_w_reg_t const* reg)
@@ -1194,6 +1695,15 @@ mpu6050_err_t mpu6050_set_mem_r_w_reg(mpu6050_t const* mpu6050, mpu6050_mem_r_w_
 mpu6050_err_t mpu6050_get_dmp_cfg_1_reg(mpu6050_t const* mpu6050, mpu6050_dmp_cfg_1_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_DMP_CFG_1, &data, sizeof(data));
+
+    reg->dmp_cfg_1 = data & 0xFFU;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_dmp_cfg_1_reg(mpu6050_t const* mpu6050,
@@ -1205,6 +1715,15 @@ mpu6050_err_t mpu6050_set_dmp_cfg_1_reg(mpu6050_t const* mpu6050,
 mpu6050_err_t mpu6050_get_dmp_cfg_2_reg(mpu6050_t const* mpu6050, mpu6050_dmp_cfg_2_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_DMP_CFG_2, &data, sizeof(data));
+
+    reg->dmp_cfg_2 = data & 0xFFU;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_dmp_cfg_2_reg(mpu6050_t const* mpu6050,
@@ -1216,6 +1735,15 @@ mpu6050_err_t mpu6050_set_dmp_cfg_2_reg(mpu6050_t const* mpu6050,
 mpu6050_err_t mpu6050_get_fifo_count_reg(mpu6050_t const* mpu6050, mpu6050_fifo_count_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data[2] = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_FIFO_COUNTH, data, sizeof(data));
+
+    reg->fifo_count = (uint16_t)(((data[0] & 0xFFU) << 8U) | (data[1] & 0xFFU));
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_fifo_count_reg(mpu6050_t const* mpu6050,
@@ -1227,6 +1755,15 @@ mpu6050_err_t mpu6050_set_fifo_count_reg(mpu6050_t const* mpu6050,
 mpu6050_err_t mpu6050_get_fifo_r_w_reg(mpu6050_t const* mpu6050, mpu6050_fifo_r_w_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_FIFO_R_W, &data, sizeof(data));
+
+    reg->fifo_r_w = data & 0xFFU;
+
+    return err;
 }
 
 mpu6050_err_t mpu6050_set_fifo_r_w_reg(mpu6050_t const* mpu6050, mpu6050_fifo_r_w_reg_t const* reg)
@@ -1237,4 +1774,13 @@ mpu6050_err_t mpu6050_set_fifo_r_w_reg(mpu6050_t const* mpu6050, mpu6050_fifo_r_
 mpu6050_err_t mpu6050_get_who_am_i_reg(mpu6050_t const* mpu6050, mpu6050_who_am_i_reg_t* reg)
 {
     assert(mpu6050 && reg);
+
+    uint8_t data = {};
+
+    mpu6050_err_t err =
+        mpu6050_bus_read_data(mpu6050, MPU6050_REG_ADDRESS_WHO_AM_I, &data, sizeof(data));
+
+    reg->who_am_i = data & 0xFFU;
+
+    return err;
 }

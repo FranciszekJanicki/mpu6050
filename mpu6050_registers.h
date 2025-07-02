@@ -276,15 +276,15 @@ typedef struct {
 } mpu6050_gyro_out_reg_t;
 
 typedef struct {
-    int16_t ext_sens_data : 16;
+    uint8_t ext_sens_data : 8;
 } mpu6050_ext_sens_data_reg_t;
 
 typedef struct {
     uint8_t mot_xneg : 1;
     uint8_t mot_xpos : 1;
-    uint8_t mot_ynef : 1;
+    uint8_t mot_yneg : 1;
     uint8_t mot_ypos : 1;
-    uint8_t mot_znef : 1;
+    uint8_t mot_zneg : 1;
     uint8_t mot_zpos : 1;
     uint8_t mot_zrmot : 1;
 } mpu6050_mot_detect_status_reg_t;
