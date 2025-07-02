@@ -175,8 +175,8 @@ mpu6050_err_t mpu6050_get_i2c_slv4_addr_reg(mpu6050_t const* mpu6050,
 mpu6050_err_t mpu6050_set_i2c_slv4_addr_reg(mpu6050_t const* mpu6050,
                                             mpu6050_i2c_slv4_addr_reg_t const* reg);
 
-mpu6050_err_t mpu6050_get_i2c_slv4_reg(mpu6050_t const* mpu6050, mpu6050_i2c_slv_reg_t* reg);
-mpu6050_err_t mpu6050_set_i2c_slv4_reg(mpu6050_t const* mpu6050, mpu6050_i2c_slv_reg_t const* reg);
+mpu6050_err_t mpu6050_get_i2c_slv4_reg(mpu6050_t const* mpu6050, mpu6050_i2c_slv4_reg_t* reg);
+mpu6050_err_t mpu6050_set_i2c_slv4_reg(mpu6050_t const* mpu6050, mpu6050_i2c_slv4_reg_t const* reg);
 
 mpu6050_err_t mpu6050_get_i2c_slv4_do_reg(mpu6050_t const* mpu6050, mpu6050_i2c_slv4_do_reg_t* reg);
 mpu6050_err_t mpu6050_set_i2c_slv4_do_reg(mpu6050_t const* mpu6050,

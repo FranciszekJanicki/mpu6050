@@ -164,7 +164,7 @@ typedef struct {
 } mpu6050_i2c_slv4_addr_reg_t;
 
 typedef struct {
-    uint8_t i2c_slv4 : 8;
+    uint8_t i2c_slv4_reg : 8;
 } mpu6050_i2c_slv4_reg_t;
 
 typedef struct {
@@ -185,7 +185,7 @@ typedef struct {
 typedef struct {
     uint8_t pass_through : 1;
     uint8_t i2c_slv4_done : 1;
-    uint8_t i2c_lost_arv : 1;
+    uint8_t i2c_lost_arb : 1;
     uint8_t i2c_slv4_nack : 1;
     uint8_t i2c_slv3_nack : 1;
     uint8_t i2c_slv2_nack : 1;
@@ -229,10 +229,10 @@ typedef struct {
     uint8_t mot_int : 1;
     uint8_t zmot_int : 1;
     uint8_t fifo_oflow_int : 1;
-    uint8_t i2c_mst_int_en : 1;
-    uint8_t pll_rdy_int_en : 1;
-    uint8_t dmp_int_en : 1;
-    uint8_t raw_rdy_en : 1;
+    uint8_t i2c_mst_int : 1;
+    uint8_t pll_rdy_int : 1;
+    uint8_t dmp_int : 1;
+    uint8_t raw_rdy_int : 1;
 } mpu6050_int_status_reg_t;
 
 typedef struct {
