@@ -54,9 +54,9 @@ typedef enum {
 } mpu6050_slave_num_t;
 
 typedef enum {
-    MPU6050_DEV_ADDRESS_AD0_LOW = 0x68,
-    MPU6050_DEV_ADDRESS_AD0_HIGH = 0x69,
-} mpu6050_dev_address_t;
+    MPU6050_SLAVE_ADDRESS_AD0_LOW = 0x68,
+    MPU6050_SLAVE_ADDRESS_AD0_HIGH = 0x69,
+} mpu6050_slave_address_t;
 
 typedef enum {
     MPU6050_REG_ADDRESS_XG_OFFS_TC = 0x00,
