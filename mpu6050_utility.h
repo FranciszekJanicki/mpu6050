@@ -35,11 +35,16 @@ inline float32_t mpu6050_accel_range_to_scale(mpu6050_accel_range_t range)
     }
 }
 
-inline uint8_t mpu6050_sampling_rate_to_divider(uint32_t sampling_rate, mpu6050_dlpf_t dlpf)
+inline uint8_t mpu6050_sampling_rate_to_divider(uint32_t sampling_rate,
+                                                mpu6050_dlpf_t dlpf)
 {
     return dlpf == MPU6050_DLPF_BW_256
-               ? (uint8_t)((MPU6050_GYRO_OUTPUT_RATE_DLPF_DIS_HZ / sampling_rate) - 1U)
-               : (uint8_t)((MPU6050_GYRO_OUTPUT_RATE_DLPF_EN_HZ / sampling_rate) - 1U);
+               ? (uint8_t)((MPU6050_GYRO_OUTPUT_RATE_DLPF_DIS_HZ /
+                            sampling_rate) -
+                           1U)
+               : (uint8_t)((MPU6050_GYRO_OUTPUT_RATE_DLPF_EN_HZ /
+                            sampling_rate) -
+                           1U);
 }
 
 #endif // MPU6050_MPU6050_UTILITY_H
