@@ -5,6 +5,10 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 enum {
     MPU6050_GYRO_OUTPUT_RATE_DLPF_EN_HZ = 1000U,
     MPU6050_GYRO_OUTPUT_RATE_DLPF_DIS_HZ = 8000U,
@@ -301,5 +305,9 @@ typedef struct {
     mpu6050_err_t (*bus_write_data)(void*, uint8_t, uint8_t const*, size_t);
     mpu6050_err_t (*bus_read_data)(void*, uint8_t, uint8_t*, size_t);
 } mpu6050_interface_t;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // MPU6050_MPU6050_CONFIG_H

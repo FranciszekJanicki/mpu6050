@@ -4,6 +4,10 @@
 #include "mpu6050_config.h"
 #include "mpu6050_registers.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct {
     mpu6050_config_t config;
     mpu6050_interface_t interface;
@@ -390,5 +394,9 @@ mpu6050_err_t mpu6050_set_fifo_r_w_reg(mpu6050_t const* mpu6050,
 
 mpu6050_err_t mpu6050_get_who_am_i_reg(mpu6050_t const* mpu6050,
                                        mpu6050_who_am_i_reg_t* reg);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // MPU6050_MPU6050_H

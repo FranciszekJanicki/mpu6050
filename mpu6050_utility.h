@@ -3,6 +3,10 @@
 
 #include "mpu6050_config.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 inline float32_t mpu6050_gyro_range_to_scale(mpu6050_gyro_range_t range)
 {
     switch (range) {
@@ -46,5 +50,9 @@ inline uint8_t mpu6050_sampling_rate_to_divider(uint32_t sampling_rate,
                             sampling_rate) -
                            1U);
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // MPU6050_MPU6050_UTILITY_H

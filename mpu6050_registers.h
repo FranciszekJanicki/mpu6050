@@ -377,4 +377,8 @@ typedef struct {
     uint8_t who_am_i : 6;
 } mpu6050_who_am_i_reg_t;
 
+#ifdef __cplusplus
+}
+#endif
+
 #endif // MPU6050_MPU6050_REGISTERS_H
