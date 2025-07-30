@@ -8,7 +8,7 @@
 #include <stdbool.h>
 
 typedef struct {
-    mpu6050_t mpu6050;
+  mpu6050_t mpu6050;
 } mpu6050_dmp_t;
 
 #endif // MPU6050_MPU6050_DMP_H
