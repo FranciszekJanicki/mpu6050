@@ -9,13 +9,13 @@
 #define MPU6050_DMP_QUAT_SCALE (1.0F / (float32_t)(1ULL << 30ULL))
 
 typedef union {
-  uint8_t data[42];
-  struct {
-    uint8_t quat_data[16];
-    uint8_t accel_data[6];
-    uint8_t temp_data[2];
-    uint8_t gyro_data[6];
-  };
+    uint8_t data[42];
+    struct {
+        uint8_t quat_data[16];
+        uint8_t accel_data[6];
+        uint8_t temp_data[2];
+        uint8_t gyro_data[6];
+    };
 } mpu6050_dmp_packet_t;
 
 #endif // MPU6050_MPU6050_DMP_CONFIG_H
